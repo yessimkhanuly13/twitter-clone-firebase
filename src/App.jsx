@@ -27,8 +27,8 @@ function App() {
 
   const signOut = () =>{
     authFirebase.signOut()
-
-    setAuth(false)
+      .then(()=>setAuth(false))
+    
   }
 
   useEffect(()=>{
@@ -47,7 +47,7 @@ function App() {
 
           <div className='col-span-2'>
             <Routes>
-              <Route path='/' element={<Home/>}/>
+              <Route path='/' element={<Home user={user} />}/>
               <Route path='/profile' element={<Profile user={user} />}/>
             </Routes>
           </div>
