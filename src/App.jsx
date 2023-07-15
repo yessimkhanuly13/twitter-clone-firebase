@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import './App.css'
-import { app, signInWithGoogle } from './config/firebase'
+import { app, signInWithGoogle, authFirebase } from './config/firebase'
 import Sidebar from './components/Sidebar';
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
@@ -25,6 +25,12 @@ function App() {
         })
   }
 
+  const signOut = () =>{
+    authFirebase.signOut()
+
+    setAuth(false)
+  }
+
   useEffect(()=>{
     console.log(signInWithGoogle)
   })
@@ -37,7 +43,7 @@ function App() {
         </div> 
         ) : (
         <div className='grid grid-cols-4'>
-          <Sidebar user={user}/>
+          <Sidebar user={user} signOut={signOut}/>
 
           <div className='col-span-2'>
             <Routes>

@@ -19,10 +19,10 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+const authFirebase = getAuth(app);
 const provider = new GoogleAuthProvider();
 
-const signInWithGoogle = () => signInWithPopup(auth, provider);
+const signInWithGoogle = () => signInWithPopup(authFirebase, provider);
 
-export {app, auth, signInWithGoogle};
+export {app, authFirebase, signInWithGoogle};
 
