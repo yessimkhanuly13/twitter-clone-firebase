@@ -1,5 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import {getFirestore, collection} from 'firebase/firestore'
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -24,5 +25,9 @@ const provider = new GoogleAuthProvider();
 
 const signInWithGoogle = () => signInWithPopup(authFirebase, provider);
 
-export {app, authFirebase, signInWithGoogle};
+const db = getFirestore(app);
+const postsFirebase = collection(db, 'posts');
+
+
+export {app, authFirebase, signInWithGoogle, postsFirebase};
 

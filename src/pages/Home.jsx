@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import TweetBox from '../components/TweetBox'
 import Post from '../components/Post'
 
-function Home({user, isSidebar, setIsSidebar}) {
+function Home({user, isSidebar, setIsSidebar, posts}) {
   return (
     <div className='flex flex-start flex-col border-x-4 text-start list-none'>
       <div className='fixed'>
@@ -12,7 +12,9 @@ function Home({user, isSidebar, setIsSidebar}) {
         </Link>
       </div>
       {!isSidebar && (<TweetBox user={user} isSidebar={isSidebar} setIsSidebar={setIsSidebar}/>)}
-      <Post user={user}/>
+      {
+        posts.map((post)=>(<Post post={post}/>))
+      }
     </div>
   )
 }

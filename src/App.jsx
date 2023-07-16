@@ -1,17 +1,30 @@
 import { useEffect, useState } from 'react'
 import './App.css'
-import { app, signInWithGoogle, authFirebase } from './config/firebase'
+import { app, signInWithGoogle, authFirebase, postsFirebase } from './config/firebase'
 import Sidebar from './components/Sidebar';
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 import SignIn from './components/SigIn'
+import {getDocs} from 'firebase/firestore'
 
 
 function App() {
 
   const [auth, setAuth] = useState(false);
   const [user, setUser] = useState({});
+  const [posts, setPosts] = useState([]);
+
+
+  const getCoordinates = async() =>{
+    //get coordinates from firestore
+    const data = await getDocs(postsFirebase);
+    setPosts(data.docs.map((doc)=>({
+      ...doc.data(),
+      id : doc.id
+    })))
+
+  }
 
   const signIn = () =>{
       signInWithGoogle()
@@ -25,14 +38,17 @@ function App() {
         })
   }
 
+
   const signOut = () =>{
     authFirebase.signOut()
       .then(()=>setAuth(false))
     
   }
 
+
+
   useEffect(()=>{
-    console.log(signInWithGoogle)
+    getCoordinates();
   })
 
   return (
@@ -47,8 +63,8 @@ function App() {
 
           <div className='col-span-2'>
             <Routes>
-              <Route path='/' element={<Home user={user} />}/>
-              <Route path='/profile/:username' element={<Profile user={user} />}/>
+              <Route path='/' element={<Home user={user} posts={posts}/>}/>
+              <Route path='/profile/:username' element={<Profile user={user} posts={posts}/>}/>
             </Routes>
           </div>
           <div>
