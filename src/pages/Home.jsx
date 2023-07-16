@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import TweetBox from '../components/TweetBox'
+import Post from '../components/Post'
 
 function Home({user, isSidebar, setIsSidebar}) {
   return (
@@ -11,6 +12,7 @@ function Home({user, isSidebar, setIsSidebar}) {
         </Link>
       </div>
       {!isSidebar && (<TweetBox user={user} isSidebar={isSidebar} setIsSidebar={setIsSidebar}/>)}
+      <Post user={user}/>
     </div>
   )
 }

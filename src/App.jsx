@@ -48,7 +48,7 @@ function App() {
           <div className='col-span-2'>
             <Routes>
               <Route path='/' element={<Home user={user} />}/>
-              <Route path='/profile' element={<Profile user={user} />}/>
+              <Route path='/profile/:username' element={<Profile user={user} />}/>
             </Routes>
           </div>
           <div>
