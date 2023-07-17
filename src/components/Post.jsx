@@ -3,7 +3,7 @@ import React from 'react'
 function Post({post}) {
   return (
     <div className='flex border-y w-full'>
-        {/* <img className='ml-2 h-8 rounded-full' src={post.photoURL} alt={user.displayName}/> */}
+        <img className='ml-2 h-8 rounded-full' src={post.photoURL} alt={post.displayName}/>
         <div className='flex flex-col'>
             <div className='flex justify-between'>
                 <div className='flex'>
