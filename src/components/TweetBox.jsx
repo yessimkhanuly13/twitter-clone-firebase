@@ -1,4 +1,7 @@
+import { addDoc } from 'firebase/firestore';
 import React, {useState} from 'react'
+import { postsFirebase } from '../config/firebase';
+
 
 function TweetBox({user, setTweetBox}) {
 
@@ -17,7 +20,9 @@ function TweetBox({user, setTweetBox}) {
       email:user.email,
       time: Date.now()
     }
-
+    addDoc(postsFirebase, data)
+      .then(()=>console.log('Success'))
+      .catch((e)=>console.log(e))
     console.log(data);
   }
 
