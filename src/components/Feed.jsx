@@ -1,35 +1,19 @@
 import React, {useState, useEffect} from 'react'
-import {getDocs} from 'firebase/firestore'
 import Post from './Post'
 import { postsFirebase } from '../config/firebase';
+import { useCollectionData } from "react-firebase-hooks/firestore"
+
 
 
 
 function Feed() {
 
-  const [posts, setPosts] = useState([]);
-
-  const getData = async() =>{
-    //get coordinates from firestore
-    const data = await getDocs(postsFirebase);
-    setPosts(data.docs.map((doc)=>({
-      ...doc.data(),
-      id : doc.id
-    })))
-    console.log(posts)
-    console.log("dd");
-  }
-
-
-  useEffect(()=>{
-    getData();
-
-  }, [])
+  const [data] = useCollectionData(postsFirebase);
 
   return (
     <div>
       {
-        posts.map((post)=>(<Post post={post}/>))
+        data && data.map((data)=>(<Post post={data}/>))
       }
     </div>
   )

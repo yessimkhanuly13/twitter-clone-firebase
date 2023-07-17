@@ -1,11 +1,32 @@
-import React, { useState }  from 'react'
+import React, { useEffect, useState }  from 'react'
 import back from '../assets/back.png'
 import calendar from '../assets/twitter.png'
 import { Link } from 'react-router-dom'
 import UnixToDate from '../components/UnixToDate'
+import Post from '../components/Post'
+import { postsFirebase } from '../config/firebase';
+import { useCollectionData } from "react-firebase-hooks/firestore"
+
 
 function Profile({user}) {
     const [isClicked, setIsCliked] = useState(false);
+    const [tweet, setTweet] = useState([]);
+    const [tweetAmount, setTweetAmount] = useState(0);
+
+    const [data] = useCollectionData(postsFirebase);
+    
+    
+    const handleTweets = () => {
+        const tweetData = data && data.filter((element)=>element.email === user.email);
+        const count = data && tweetData && tweetData.length;
+        setTweet(tweetData);
+        setTweetAmount(count)
+    }
+
+
+    useEffect(()=>{
+        handleTweets();
+    },[data])
 
   return (
     <div className='flex flex-start flex-col border-x-4'>
@@ -15,7 +36,7 @@ function Profile({user}) {
             </Link>
             <div className='ml-2'>
             <li>{user.displayName}</li>
-            <li className='text-sm text-slate-500'> 0 Tweet </li>
+            <li className='text-sm text-slate-500'>{tweetAmount > 1 ? tweetAmount + " tweets" : tweetAmount + " tweet"}</li>
             </div>
         </div>
         <div className=''>
@@ -34,22 +55,7 @@ function Profile({user}) {
                 <div onClick={() => setIsCliked(true)} className= {!isClicked ? ('cursor-pointer hover:bg-slate-200 p-2') : ('cursor-pointer hover:bg-slate-200 p-2 border-b-4 border-b-blue-300')} >Likes</div>
             </div>
             <div>
-                {isClicked ? (<div>
-                    <img  src={back} alt="back" />
-                    <img  src={back} alt="back" />
-                    <img  src={back} alt="back" />
-                    <img  src={back} alt="back" />
-
-                    <img  src={back} alt="back" />
-                    <img  src={back} alt="back" />
-                    <img  src={back} alt="back" />
-                    <img  src={back} alt="back" />
-                    <img  src={back} alt="back" />
-                    <img  src={back} alt="back" />
-
-                    <img  src={back} alt="back" />
-
-                </div>) : (<div>
+                {!isClicked ? tweet && tweet.map((post)=><Post post={post}/>)  : (<div>
                     <img  src={calendar} alt="calendar" />
                     <img  src={calendar} alt="calendar" />
                     <img  src={calendar} alt="calendar" />
