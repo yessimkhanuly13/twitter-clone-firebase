@@ -4,7 +4,7 @@ import liked from '../assets/liked.png'
 import waste from '../assets/waste.png'
 import { authFirebase, postsFirebase } from '../config/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import {updateDoc, doc} from 'firebase/firestore'
+import {updateDoc, doc, deleteDoc} from 'firebase/firestore'
 
 function Post({post}) {
 
@@ -19,7 +19,7 @@ function Post({post}) {
         console.log(post)
     })
 
-    const handleClick = () =>{
+    const handleUpdate = () =>{
         const docRef = doc(postsFirebase, post.id);
         if(isLiked === false){
             setIsLiked(true);
@@ -37,6 +37,13 @@ function Post({post}) {
                 .catch((e)=>console.log(e))
             console.log(postLikes)
         }
+    }
+
+    const handleDelete = () =>{
+        const docRef = doc(postsFirebase, post.id);
+        deleteDoc(docRef)
+            .then(()=>console.log('Success'))
+            .catch((e)=>console.log(e))
     }
 
     const unixToDate = (unix) =>{
@@ -60,9 +67,9 @@ function Post({post}) {
             </div>
             <div className='ml-2 max-w-xl break-words'>{post.content}</div>
             <div className='flex'>
-                <li onClick={()=>user && handleClick()} className='cursor-pointer mt-2 hover:bg-rose-400 rounded-full'><img src={!isLiked ? like : liked} className='h-8 p-2'/></li>
+                <li onClick={()=>user && handleUpdate()} className='cursor-pointer mt-2 hover:bg-rose-400 rounded-full'><img src={!isLiked ? like : liked} className='h-8 p-2'/></li>
                 <li className='mt-2.5 text-slate-500 '>{post.likes.length - 1}</li>
-                {isUser && (<li className='ml-6 cursor-pointer mt-2 hover:bg-rose-400 rounded-full'><img src={waste} className='h-8 p-2'/></li>)}
+                {isUser && (<li onClick={handleDelete} className='ml-6 cursor-pointer mt-2 hover:bg-rose-400 rounded-full'><img src={waste} className='h-8 p-2'/></li>)}
             </div>
             
         </div>
