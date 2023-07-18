@@ -29,12 +29,13 @@ function Post({post}) {
             updateDoc(docRef, {likes: postLikes})
                 .then(()=>console.log("success"))
                 .catch((e)=>console.log(e))
-        }else{
+        }else if(isLiked === true){
             setIsLiked(false);
-            let postLikes = post.likes.filter((el)=>el.email !== user.email);
-            updateDoc(postsFirebase, {likes:postLikes})
+            let postLikes = post.likes.filter((el)=>el !== user.email);
+            updateDoc(docRef, {likes:postLikes})
                 .then(()=>console.log('success'))
                 .catch((e)=>console.log(e))
+            console.log(postLikes)
         }
     }
 
@@ -60,7 +61,8 @@ function Post({post}) {
             <div className='ml-2 max-w-xl break-words'>{post.content}</div>
             <div className='flex'>
                 <li onClick={()=>user && handleClick()} className='cursor-pointer mt-2 hover:bg-rose-400 rounded-full'><img src={!isLiked ? like : liked} className='h-8 p-2'/></li>
-                {isUser && (<li className='cursor-pointer mt-2 hover:bg-rose-400 rounded-full'><img src={waste} className='h-8 p-2'/></li>)}
+                <li className='mt-2.5 text-slate-500 '>{post.likes.length - 1}</li>
+                {isUser && (<li className='ml-6 cursor-pointer mt-2 hover:bg-rose-400 rounded-full'><img src={waste} className='h-8 p-2'/></li>)}
             </div>
             
         </div>
