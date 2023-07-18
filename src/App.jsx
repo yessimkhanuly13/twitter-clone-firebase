@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { createContext, useState } from 'react'
 import './App.css'
 import { signInWithGoogle, authFirebase } from './config/firebase'
 import Sidebar from './components/Sidebar';
@@ -7,11 +7,13 @@ import Home from './pages/Home';
 import Profile from './pages/Profile';
 import SignIn from './components/SigIn'
 
+export const User = createContext();
 
 function App() {
 
   const [auth, setAuth] = useState(false);
   const [user, setUser] = useState({});
+
 
 
   const signIn = () =>{
@@ -30,8 +32,8 @@ function App() {
   const signOut = () =>{
     authFirebase.signOut()
       .then(()=>setAuth(false))
-    
   }
+  
 
 
   return (

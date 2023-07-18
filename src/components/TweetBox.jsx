@@ -11,6 +11,10 @@ function TweetBox({user}) {
       setContent(e.target.value);
   }
 
+  const handleFileChange = (e) =>{
+    console.log(e.target.files[0])
+  }
+
   const addData = () =>{
     console.log('dd');
     const data = {
@@ -31,6 +35,7 @@ function TweetBox({user}) {
         <img className='ml-2 mt-2 h-16 rounded-full' src={user.photoURL} alt="" />
         <div className='flex flex-col w-full ml-2'>
           <textarea value={content} onChange={handleChangePost} className='w-full h-24' placeholder="What's happening?"  type="text"/>
+          <input type='file'onChange={handleFileChange}/>
           <button type='submit' onClick={addData} className='text-white bg-blue-400 font-bold rounded-full w-32 h-8 self-end m-2'>Tweet</button>
         </div>
       </div>
