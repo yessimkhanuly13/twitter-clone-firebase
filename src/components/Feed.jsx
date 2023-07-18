@@ -8,7 +8,7 @@ import { useCollectionData } from "react-firebase-hooks/firestore"
 
 function Feed() {
 
-  const [data] = useCollectionData(postsFirebase);
+  const [data] = useCollectionData(postsFirebase, {idField: "id" });
 
   return (
     <div>

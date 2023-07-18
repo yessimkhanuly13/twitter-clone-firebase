@@ -1,6 +1,7 @@
-import { addDoc } from 'firebase/firestore';
+import { addDoc, updateDoc } from 'firebase/firestore';
 import React, {useState} from 'react'
 import { postsFirebase } from '../config/firebase';
+import 'firebase/firestore';
 
 
 function TweetBox({user}) {
@@ -22,10 +23,17 @@ function TweetBox({user}) {
       displayName:user.displayName,
       photoURL:user.photoURL,
       email:user.email,
-      createdAt: Date.now()
+      createdAt: Date.now(),
+      likes:['']
     }
     addDoc(postsFirebase, data)
-      .then(()=>setContent(''))
+      .then((docRef)=>{
+        console.log(docRef)
+        updateDoc(docRef, {id:docRef.id})
+          .then(()=>console.log('ddd'))
+        setContent('')
+      })
+
       .catch((e)=>console.log(e))
     console.log(data);
   }
