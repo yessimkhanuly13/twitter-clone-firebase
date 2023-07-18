@@ -12,6 +12,7 @@ function Profile({user}) {
     const [isClicked, setIsCliked] = useState(false);
     const [tweet, setTweet] = useState([]);
     const [tweetAmount, setTweetAmount] = useState(0);
+    const [likedTweets, setLikedTweets] = useState([]);
 
     const [data] = useCollectionData(postsFirebase);
     
@@ -23,9 +24,20 @@ function Profile({user}) {
         setTweetAmount(count)
     }
 
+    const handleLikedTweets = () =>{
+        let arr = [];
+        data && data.forEach((el)=>{
+            if(el.likes.includes(user.email)){
+                arr.push(el);
+            }
+        })
+        data && setLikedTweets(arr);
+    }
+
 
     useEffect(()=>{
         handleTweets();
+        handleLikedTweets();
     },[data])
 
   return (
@@ -55,21 +67,8 @@ function Profile({user}) {
                 <div onClick={() => setIsCliked(true)} className= {!isClicked ? ('cursor-pointer hover:bg-slate-200 p-2') : ('cursor-pointer hover:bg-slate-200 p-2 border-b-4 border-b-blue-300')} >Likes</div>
             </div>
             <div>
-                {!isClicked ? tweet && tweet.map((post)=><Post post={post}/>)  : (<div>
-                    <img  src={calendar} alt="calendar" />
-                    <img  src={calendar} alt="calendar" />
-                    <img  src={calendar} alt="calendar" />
-                    <img  src={calendar} alt="calendar" />
-
-                    <img  src={calendar} alt="calendar" />
-                    <img  src={calendar} alt="calendar" />
-                    <img  src={calendar} alt="calendar" />
-                    <img  src={calendar} alt="calendar" />
-                    <img  src={calendar} alt="calendar" />
-                    <img  src={calendar} alt="calendar" />
-
-                    <img  src={calendar} alt="calendar" />
-                </div>)}
+                {!isClicked ? tweet && tweet.map((post)=>(<Post post={post}/>)) :
+                    likedTweets && likedTweets.map((post)=>(<Post post={post}/>))}
             </div>
         </div>
     </div>
