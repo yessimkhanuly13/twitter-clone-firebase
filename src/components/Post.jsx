@@ -4,7 +4,7 @@ import liked from '../assets/liked.png'
 import waste from '../assets/waste.png'
 import { authFirebase, postsFirebase } from '../config/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import {updateDoc} from 'firebase/firestore'
+import {updateDoc, doc} from 'firebase/firestore'
 
 function Post({post}) {
 
@@ -19,20 +19,31 @@ function Post({post}) {
         console.log(post)
     })
 
-    const handleClick = async() =>{
+    const handleClick = () =>{
+        const docRef = doc(postsFirebase, post.id);
         if(isLiked === false){
             setIsLiked(true);
-            // const docRef = postsFirebase.doc(post.id);
-            // let postLikes = post.likes;
-            // postLikes.push(user.email) 
-            // await updateDoc(docRef, {likes: postLikes})
+            let postLikes = post.likes;
+            postLikes.push(user.email);
+
+            updateDoc(docRef, {likes: postLikes})
+                .then(()=>console.log("success"))
+                .catch((e)=>console.log(e))
         }else{
             setIsLiked(false);
-            // let postLikes = post.likes;
-            // await updateDoc(postsFirebase, {likes:postLikes.filter((el)=>el.email !== user.email)})
+            let postLikes = post.likes.filter((el)=>el.email !== user.email);
+            updateDoc(postsFirebase, {likes:postLikes})
+                .then(()=>console.log('success'))
+                .catch((e)=>console.log(e))
         }
+    }
 
-        console.log("clicked")
+    const unixToDate = (unix) =>{
+        const date = new Date(unix);
+        const month = ('0' + (date.getMonth() + 1)).slice(-2);
+        const day = ('0' + date.getDate()).slice(-2);
+        const year = date.getFullYear();
+        return `${day}.${month}.${year}`
     }
 
   return (
@@ -43,7 +54,7 @@ function Post({post}) {
                 <div className='flex flex-start'>
                     <li className='ml-2'>{post.displayName}</li>
                     <li className='ml-2 text-slate-400'>@{post.email}</li>
-                    <li className='ml-2 text-slate-400'>{Date.now() - post.createdAt}</li>
+                    <li className='ml-2 text-slate-400'>{unixToDate(post.createdAt)}</li>
                 </div>
             </div>
             <div className='ml-2 max-w-xl break-words'>{post.content}</div>
