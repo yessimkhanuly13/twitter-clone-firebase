@@ -10,9 +10,11 @@ function Post({post}) {
     const [user] = useAuthState(authFirebase);
 
     const [isUser, setIsUser] = useState(false);
+    const [isLiked, setIsLiked] = useState(false)
 
     useEffect(()=>{
         user && user.email === post.email ? setIsUser(true) : setIsUser(false);
+        user && setIsLiked(post.likes.includes(user.email))
     })
 
   return (
@@ -23,12 +25,12 @@ function Post({post}) {
                 <div className='flex flex-start'>
                     <li className='ml-2'>{post.displayName}</li>
                     <li className='ml-2 text-slate-400'>@{post.email}</li>
-                    <li className='ml-2 text-slate-400'>{post.time}</li>
+                    <li className='ml-2 text-slate-400'>{Date.now() - post.createdAt}</li>
                 </div>
             </div>
             <div className='ml-2 max-w-xl break-words'>{post.content}</div>
             <div className='flex'>
-                <li className='cursor-pointer mt-2 hover:bg-rose-400 rounded-full'><img src={like} className='h-8 p-2'/></li>
+                <li className='cursor-pointer mt-2 hover:bg-rose-400 rounded-full'><img src={!isLiked ? like : liked} className='h-8 p-2'/></li>
                 {isUser && (<li className='cursor-pointer mt-2 hover:bg-rose-400 rounded-full'><img src={waste} className='h-8 p-2'/></li>)}
             </div>
             
