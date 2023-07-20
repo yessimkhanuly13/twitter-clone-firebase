@@ -5,7 +5,7 @@ import Sidebar from './components/Sidebar';
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
-import SignIn from './components/SigIn'
+import SigIn from './components/SignIn';
 
 export const User = createContext();
 
@@ -40,7 +40,7 @@ function App() {
     <>
       { !auth ? (
         <div className='flex justify-center items-center h-screen'>
-            <SignIn signInWithGoogle={signIn}/>
+            <SigIn signInWithGoogle={signIn}/>
         </div> 
         ) : (
         <div className='grid grid-cols-4'>
