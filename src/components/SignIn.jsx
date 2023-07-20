@@ -1,7 +1,7 @@
 import React from 'react'
 import google from '../assets/google.png'
 
-function Sigin({signInWithGoogle}) {
+function SigIn({signInWithGoogle}) {
   return (
     <div className='list-none flex cursor-pointer p-4 font-bold hover:bg-slate-300 rounded-full' onClick={signInWithGoogle}>
       <img className='h-8' src={google} alt='google'/>
@@ -10,4 +10,4 @@ function Sigin({signInWithGoogle}) {
   )
 }
 
-export default Sigin
+export default SigIn
