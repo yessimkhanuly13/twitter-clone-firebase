@@ -2,6 +2,7 @@
 import { initializeApp } from "firebase/app";
 import {getFirestore, collection} from 'firebase/firestore'
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import {getStorage} from 'firebase/storage'
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -27,7 +28,8 @@ const signInWithGoogle = () => signInWithPopup(authFirebase, provider);
 
 const db = getFirestore(app);
 const postsFirebase = collection(db, 'posts');
+const storage = getStorage(app);
 
 
-export {app, authFirebase, signInWithGoogle, postsFirebase};
+export {app, authFirebase, signInWithGoogle, postsFirebase, storage};
 

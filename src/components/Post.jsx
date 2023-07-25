@@ -65,7 +65,12 @@ function Post({post}) {
                     <li className='ml-2 text-slate-400'>{unixToDate(post.createdAt)}</li>
                 </div>
             </div>
-            <div className='ml-2 max-w-xl break-words'>{post.content}</div>
+            <div>
+                <div className='ml-2 max-w-xl break-words text-start'>
+                    {post.content}
+                </div>
+                {post.imgURL != '' ? (<img className='p-1 h-18' src={post.imgURL} alt="image" />) : "" }
+            </div>
             <div className='flex'>
                 <li onClick={()=>user && handleUpdate()} className='cursor-pointer mt-2 hover:bg-rose-400 rounded-full'><img src={!isLiked ? like : liked} className='h-8 p-2'/></li>
                 <li className='mt-2.5 text-slate-500 '>{post.likes.length - 1}</li>
