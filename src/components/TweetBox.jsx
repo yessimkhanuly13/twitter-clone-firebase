@@ -5,7 +5,7 @@ import 'firebase/firestore';
 import {ref, getDownloadURL, uploadBytesResumable} from'firebase/storage';
 
 
-function TweetBox({user}) {
+function TweetBox({user, inputRef}) {
 
   const [content, setContent] = useState('');
   const [imageUpload, setImageUpload] = useState(null);
@@ -83,7 +83,7 @@ function TweetBox({user}) {
         <img className='ml-2 mt-2 h-16 rounded-full' src={user.photoURL} alt="" />
         <div className='flex flex-col w-full ml-2'>
           {progress != 0 ? (<p>{progress}%</p>) : ""}
-          <textarea value={content} onChange={handleChangePost} className='w-full h-24' placeholder="What's happening?"  type="text"/>
+          <textarea ref={inputRef} value={content} onChange={handleChangePost} className='w-full h-24' placeholder="What's happening?"  type="text"/>
           <input type='file'onChange={handleFileChange}/>
           <button type='submit' onClick={addData} className='text-white bg-blue-400 font-bold rounded-full w-32 h-8 self-end m-2'>Tweet</button>
         </div>

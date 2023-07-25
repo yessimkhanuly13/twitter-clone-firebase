@@ -1,6 +1,6 @@
 import React, { useEffect, useState }  from 'react'
 import back from '../assets/back.png'
-import calendar from '../assets/twitter.png'
+import calendar from '../assets/calendar.png'
 import { Link } from 'react-router-dom'
 import UnixToDate from '../components/UnixToDate'
 import Post from '../components/Post'
@@ -59,8 +59,8 @@ function Profile({user}) {
                 <UnixToDate unix={user.metadata.createdAt}/>
             </div>
             <div className='flex ml-4 list-none text-slate-500 '>
-                <li className='cursor-pointer hover:underline underline-offset-1'>{} Followers</li>
-                <li className='ml-2 cursor-pointer hover:underline underline-offset-1'>{} Following</li>
+                {/* <li className='cursor-pointer hover:underline underline-offset-1'>{} Followers</li>
+                <li className='ml-2 cursor-pointer hover:underline underline-offset-1'>{} Following</li> */}
             </div>
             <div className='grid grid-cols-2 mt-4'>
                 <div onClick={() => setIsCliked(false)} className= {isClicked ? ('cursor-pointer hover:bg-slate-200 p-2') : ('cursor-pointer hover:bg-slate-200 p-2 border-b-4 border-b-blue-300')} >Tweets</div>
