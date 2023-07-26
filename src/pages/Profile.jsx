@@ -16,10 +16,15 @@ function Profile({user}) {
 
     const [data] = useCollectionData(postsFirebase);
     
+    // function orderByDesc(a, b) {
+    //     return b.createdAt - a.createdAt;
+    // }
     
     const handleTweets = () => {
         const tweetData = data && data.filter((element)=>element.email === user.email);
         const count = data && tweetData && tweetData.length;
+        // tweetData.sort(orderByDesc);
+        console.log(tweetData)
         setTweet(tweetData);
         setTweetAmount(count)
     }
@@ -31,6 +36,7 @@ function Profile({user}) {
                 arr.push(el);
             }
         })
+        // arr.sort(orderByDesc)
         data && setLikedTweets(arr);
     }
 
